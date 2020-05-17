@@ -19,4 +19,4 @@ before_install:
     - docker build -t mojoboss/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true mojoboss/docker-react npm run test
+    - docker run -e CI=true mojoboss/react-test npm run test
