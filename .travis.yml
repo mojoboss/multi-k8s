@@ -6,4 +6,12 @@ before_install:
     - curl https://sdk.cloud.google.com | bash > /dev/null;
     - source $HOME/google-cloud-sdk/path.bash.inc
     - gcloud components update kubectl
-    - gcloud auth activate-service-account --key-file service-account.json
+    - gcloud auth activate-service-account --key-file multi-k8s-277507-4a594f572ad9.json
+    - gcloud config set project multi-k8s-277507
+    - gcloud config set compute/zone us-central1-c
+    - gcloud container clusters get-credentials cluster-1
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t mojoboss/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true mojoboss/docker-react npm run test
